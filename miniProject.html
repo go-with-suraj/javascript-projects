@@ -1,0 +1,205 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript for Everyone:DOM</title>
+  </head>
+  <body style="background-color: aqua;">
+    <div class="wrapper">
+        <h1>JavaScript challenges in <span id="dynamicYear">2022</span></h1>
+        <h2>Learning JavaScript Challenge</h2>
+        <div id="date-time">Date and Time</div>
+        <ul>
+            <li class="completed">1st JavaScript Challenge is Done</li>
+            <li class="ongoing"> 2nd JavaScript Challenge is Ongoing</li>
+            <li class="coming">3rd JavaScript Challenge is Coming</li>
+            <li class="coming">4th JavaScript Challenge is Coming</li>
+            <li class="coming">5th JavaScript Challenge is Coming</li>
+            <li class="coming">6th JavaScript Challenge is Coming</li>
+            <li class="coming">7th JavaScript challenge is Coming</li>
+        </ul>
+    </div>
+
+    <script>
+         const dynamicYear = document.getElementById('dynamicYear')
+         const color = [
+  `AliceBlue`,
+  `AntiqueWhite`,
+  `Aqua`,
+  `Aquamarine`,
+  `Azure`,
+  `Beige`,
+  `Bisque`,
+  `Black`,
+  `BlanchedAlmond`,
+  `Blue`,
+  `BlueViolet`,
+  `Brown`,
+  `BurlyWood`,
+  `CadetBlue`,
+  `Chartreuse`,
+  `Chocolate`,
+  `Coral`,
+  `CornflowerBlue`,
+  `Cornsilk`,
+  `Crimson`,
+  `Cyan`,
+  `DarkBlue`,
+  `DarkCyan`,
+  `DarkGoldenRod`,
+  `DarkGray`,
+  `DarkGrey`,
+  `DarkGreen`,
+  `DarkKhaki`,
+  `DarkMagenta`,
+  `DarkOliveGreen`,
+  `Darkorange`,
+  `DarkOrchid`,
+  `DarkRed`,
+  `DarkSalmon`,
+  `DarkSeaGreen`,
+  `DarkSlateBlue`,
+  `DarkSlateGray`,
+  `DarkSlateGrey`,
+  `DarkTurquoise`,
+  `DarkViolet`,
+  `DeepPink`,
+  `DeepSkyBlue`,
+  `DimGray`,
+  `DimGrey`,
+  `DodgerBlue`,
+  `FireBrick`,
+  `FloralWhite`,
+  `ForestGreen`,
+  `Fuchsia`,
+  `Gainsboro`,
+  `GhostWhite`,
+  `Gold`,
+  `GoldenRod`,
+  `Gray`,
+  `Grey`,
+  `Green`,
+  `GreenYellow`,
+  `HoneyDew`,
+  `HotPink`,
+  `IndianRed`,
+  `Indigo`,
+  `Ivory`,
+  `Khaki`,
+  `Lavender`,
+  `LavenderBlush`,
+  `LawnGreen`,
+  `LemonChiffon`,
+  `LightBlue`,
+  `LightCoral`,
+  `LightCyan`,
+  `LightGoldenRodYellow`,
+  `LightGray`,
+  `LightGrey`,
+  `LightGreen`,
+  `LightPink`,
+  `LightSalmon`,
+  `LightSeaGreen`,
+  `LightSkyBlue`,
+  `LightSlateGray`,
+  `LightSlateGrey`,
+  `LightSteelBlue`,
+  `LightYellow`,
+  `Lime`,
+  `LimeGreen`,
+  `Linen`,
+  `Magenta`,
+  `Maroon`,
+  `MediumAquaMarine`,
+  `MediumBlue`,
+  `MediumOrchid`,
+  `MediumPurple`,
+  `MediumSeaGreen`,
+  `MediumSlateBlue`,
+  `MediumSpringGreen`,
+  `MediumTurquoise`,
+  `MediumVioletRed`,
+  `MidnightBlue`,
+  `MintCream`,
+  `MistyRose`,
+  `Moccasin`,
+  `NavajoWhite`,
+  `Navy`,
+  `OldLace`,
+  `Olive`,
+  `OliveDrab`,
+  `Orange`,
+  `OrangeRed`,
+  `Orchid`,
+  `PaleGoldenRod`,
+  `PaleGreen`,
+  `PaleTurquoise`,
+  `PaleVioletRed`,
+  `PapayaWhip`,
+  `PeachPuff`,
+  `Peru`,
+  `Pink`,
+  `Plum`,
+  `PowderBlue`,
+  `Purple`,
+  `Red`,
+  `RosyBrown`,
+  `RoyalBlue`,
+  `SaddleBrown`,
+  `Salmon`,
+  `SandyBrown`,
+  `SeaGreen`,
+  `SeaShell`,
+  `Sienna`,
+  `Silver`,
+  `SkyBlue`,
+  `SlateBlue`,
+  `SlateGray`,
+  `SlateGrey`,
+  `Snow`,
+  `SpringGreen`,
+  `SteelBlue`,
+  `Tan`,
+  `Teal`,
+  `Thistle`,
+  `Tomato`,
+  `Turquoise`,
+  `Violet`,
+  `Wheat`,
+  `White`,
+  `WhiteSmoke`,
+  `Yellow`,
+  `YellowGreen`,
+]
+
+
+         setInterval(() => {
+            const randomColor = color[Math.floor(Math.random() * color.length)]
+            dynamicYear.style.color = randomColor
+         }, 1000)
+
+
+
+         const dynamicDateTime = document.querySelector('#date-time')
+         setInterval(() => {
+            const randomBgColor = color[Math.floor(Math.random() * color.length)]
+            dynamicDateTime.style.backgroundColor = randomBgColor
+            dynamicDateTime.textContent = new Date().toLocaleString()
+
+         }, 1000)
+
+         const challenges = document.querySelectorAll('ul li')
+         challenges.forEach((challenge, i) => {
+            if(challenge.classList.contains('completed')){
+                challenge.style.backgroundColor = 'green'
+            } else if(challenge.classList.contains('ongoing')){
+                challenge.style.backgroundColor = 'yellow'
+            } else {
+                challenge.style.backgroundColor = 'red'
+            }
+
+         })
+
+    </script>
+  </body>
+</html>
