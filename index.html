@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Solar System</title>
+</head>
+<body>
+     <style>
+        body {
+            color: white;
+            background-color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        #btn {
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgb(163, 134, 134);
+            color: white;
+            font-weight: bold;
+        }
+        #btn:hover {
+            color: rgb(36, 44, 44);
+        }
+        #planetImage {
+            margin-top: 20px;
+            width: 500px;
+            height: 500px;
+            object-fit: contain;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+     </style>
+
+    <h1>Calculate a Weight of an object on a planet</h1>
+    <input type="text" id="input" placeholder="Enter your Mass in Kilogram">
+    <input type="search"  id="selectPlanet" list="planetList"  placeholder="--Select the planet--">
+    <datalist id="planetList">
+        <option value="Mercury"></option>
+        <option value="Venus"></option>
+        <option value="Earth"></option>
+        <option value="Mars"></option>
+        <option value="Jupiter"></option>
+        <option value="Saturn"></option>
+        <option value="Uranus"></option>
+        <option value="Neptune"></option>
+        <option value="Moon"></option>
+    </datalist>
+    <button id="btn">Calculate Weight</button>
+    <div id="result"></div>
+    <img id="planetImage" src="" alt="">
+
+    <script>
+        const planetGravity = {
+            mercury: 3.7,
+            venus: 8.87,
+            earth: 9.81,
+            mars: 3.71,
+            jupiter: 24.79,
+            saturn: 10.44,
+            uranus: 8.69,
+            neptune: 11.15,
+            moon: 1.62
+        };
+
+        const planetImages = {
+            mercury: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDToJWEgacesQ_N_4e3pRQ1qHuy02RSal6Mg&s",
+            venus: "https://cdn.mos.cms.futurecdn.net/RifjtkFLBEFgzkZqWEh69P.jpg",
+            earth: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQxrLi8oqLdKu5Hjblp4y2DA8hmq6SIPe41g&s',
+            mars: "https://static.scientificamerican.com/sciam/cache/file/C454F5A6-536E-4C9F-AA6AF354BB85A85B_source.jpg?w=1200",
+            jupiter: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Jupiter_New_Horizons.jpg/290px-Jupiter_New_Horizons.jpg",
+            saturn: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO0YNhSx5B_u7n-AdsQDR_lmJ3EK2Z7sRYpw&s",
+            uranus: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb9kcPfzEwUlA-gQXRTrLSFTNo98J968BNkg&s",
+            neptune: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCSc6RKw3iBur0-BiVKd9ZniHYVfQCvfTM4g&s",
+            moon: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1200px-FullMoon2010.jpg"
+        }
+
+        const numberWords = {
+            "zero": 0,
+            "one": 1,
+            "two": 2,
+            "three": 3,
+            "four": 4,
+            "five": 5,
+            "six": 6,
+            "seven": 7,
+            "eight": 8,
+            "nine": 9,
+            "ten": 10,
+            "eleven": 11,
+            "twelve": 12,
+            "thirteen": 13,
+            "fourteen": 14,
+            "fifteen": 15,
+            "sixteen": 16,
+            "seventeen": 17,
+            "eighteen": 18,
+            "nineteen": 19,
+            "twenty": 20,
+            "thirty": 30,
+            "forty": 40,
+            "fifty": 50,
+            "sixty": 60,
+            "seventy": 70,
+            "eighty": 80,
+            "ninety": 90,
+            "hundred": 100,
+            "thousand": 1000
+        };
+
+        function convertWordsToNumbers(text){
+            if(!text.trim()) return NaN
+
+            const words = text.toLowerCase().split(/[-\s]/)
+            let counter = 0
+            let total = 0
+
+            words.forEach(word => {
+                if(!isNaN(word)){
+                    counter += Number(word)
+                }
+                else if(words in numberWords){
+                    const value = numberWords[word]
+                    if(value === 100 || value === 1000){
+                        counter = counter === 0 ? 1 : counter
+                        counter*= value
+                    } else {
+                        counter+= value
+                    }
+                
+                } else if(word === 'and'){
+                    return // ignoring the 'and'
+                } 
+                else {
+                    counter = NaN
+                }
+                
+            })
+            total += counter
+            return total
+        }
+
+        function calculateWeight(){
+            const massInput = document.getElementById('input').value
+            const planet = document.getElementById('selectPlanet').value.toLowerCase()
+            const mass = convertWordsToNumbers(massInput)
+            const gravity = planetGravity[planet]
+            const images = planetImages[planet]
+
+            if(isNaN(mass) || mass <= 0 && gravity){
+                document.getElementById('result').innerHTML = 'Please enter the positive mass'
+                document.getElementById('planetImage').src = ''
+                return
+            }
+            if(!gravity){
+                document.getElementById('result').innerHTML = 'Please select the planet'
+                document.getElementById('planetImage').src = ''
+                return 
+            }
+            
+
+            document.getElementById('input').value = mass
+            const Weight = mass * gravity
+            document.getElementById('result').innerHTML = `your weight on ${planet.charAt(0).toUpperCase() + planet.slice(1)} is ${Weight.toFixed(2)} N.`
+            document.getElementById('planetImage').src = images
+            document.getElementById('planetImage').alt = `${planet.charAt(0).toUpperCase() + planet.slice(1)}`
+        }
+        document.getElementById('btn').addEventListener('click', calculateWeight)
+    </script>
+</body>
+</html>
